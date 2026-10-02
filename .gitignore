@@ -1,0 +1,4 @@
+# Local-only files (not part of the website)
+.claude/
+email-server/
+.DS_Store
