@@ -52,7 +52,6 @@ async function loadServerStatus() {
       status.textContent = "Online";
       status.className = "status online";
       card.querySelector("[data-players]").textContent = `${data.players.online}/${data.players.max}`;
-      if (data.version) card.querySelector("[data-version]").textContent = data.version.replace(/^Paper\s*/i, "");
       if (data.icon) card.querySelector(".server-icon").src = data.icon;
       return data.players.online;
     } catch {
@@ -87,8 +86,9 @@ async function loadMods() {
     if (!projects.length) return;
 
     const total = projects.reduce((sum, p) => sum + p.downloads, 0);
+    // Same compact rounding Modrinth shows (e.g. 1,970 -> 2K)
     document.getElementById("fact-downloads").textContent =
-      total >= 1000 ? `${(Math.floor(total / 100) / 10).toFixed(1)}k` : total;
+      new Intl.NumberFormat("en", { notation: "compact" }).format(total);
 
     document.getElementById("mods-list").innerHTML = projects.map((p) => {
       const url = `https://modrinth.com/${p.project_type}/${p.slug}`;
@@ -108,6 +108,20 @@ async function loadMods() {
     }).join("");
   } catch {
     // Keep the static fallback in the HTML
+  }
+}
+
+// 2K celebration (temporary): pixel confetti on the banner
+const confetti = document.querySelector(".celebrate-confetti");
+if (confetti) {
+  const colors = ["#8b5cf6", "#a78bfa", "#c4b5fd", "#ffffff", "#5b21b6"];
+  for (let i = 0; i < 28; i++) {
+    const bit = document.createElement("i");
+    bit.style.left = `${Math.random() * 100}%`;
+    bit.style.background = colors[i % colors.length];
+    bit.style.animationDelay = `${(Math.random() * 4).toFixed(2)}s`;
+    bit.style.animationDuration = `${(2.5 + Math.random() * 2.5).toFixed(2)}s`;
+    confetti.appendChild(bit);
   }
 }
 
