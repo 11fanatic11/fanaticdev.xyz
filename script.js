@@ -114,7 +114,7 @@ async function loadMods() {
 // 2K celebration (temporary): pixel confetti on the banner
 const confetti = document.querySelector(".celebrate-confetti");
 if (confetti) {
-  const colors = ["#8b5cf6", "#a78bfa", "#c4b5fd", "#ffffff", "#5b21b6"];
+  const colors = ["#e11d48", "#fb7185", "#fecdd3", "#ffffff", "#9f1239"];
   for (let i = 0; i < 28; i++) {
     const bit = document.createElement("i");
     bit.style.left = `${Math.random() * 100}%`;
