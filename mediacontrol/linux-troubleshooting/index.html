@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MediaControl on Linux | Fanatic</title>
+  <meta name="description" content="Set up and troubleshoot the MediaControl Minecraft mod on Linux: install playerctl, check your player, and fix Flatpak launchers.">
+  <meta name="theme-color" content="#0a0710">
+  <meta property="og:title" content="MediaControl on Linux | Fanatic">
+  <meta property="og:description" content="Install playerctl, check your media player, and fix common problems with MediaControl on Linux.">
+  <meta property="og:image" content="https://fanaticdev.xyz/assets/logo-512.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="64x64" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="nav">
+    <a class="nav-brand" href="/">
+      <img src="/assets/favicon.png" alt="" width="32" height="32">
+      <span>FanaticDev</span>
+    </a>
+    <nav class="nav-links">
+      <a href="/#servers">Servers</a>
+      <a href="/#mods">Mods</a>
+      <a href="https://modrinth.com/user/11fanatic11" target="_blank" rel="noopener">Modrinth</a>
+    </nav>
+  </header>
+
+  <main class="doc">
+    <p class="crumbs"><a href="/">Home</a> / MediaControl / Linux</p>
+    <h1>MediaControl on Linux</h1>
+    <p class="doc-lede">MediaControl shows the music or video you are playing (title, artist, album cover, progress bar, play/pause, skip and back) on the Minecraft pause menu and main menu.</p>
+    <p>On <strong>Windows</strong> it works out of the box. On <strong>Linux</strong> it needs one small program installed, <code>playerctl</code>, plus a media player that supports MPRIS (the standard Linux media-control interface).</p>
+
+    <nav class="doc-toc" aria-label="On this page">
+      <b>On this page</b>
+      <a href="#requirements">What you need</a>
+      <a href="#install">1. Install playerctl</a>
+      <a href="#check">2. Check that it works</a>
+      <a href="#start">3. Start Minecraft</a>
+      <a href="#flatpak">Flatpak launchers</a>
+      <a href="#troubleshooting">Troubleshooting</a>
+      <a href="#good-to-know">Good to know</a>
+    </nav>
+
+    <h2 id="requirements">What you need</h2>
+    <ul>
+      <li>Minecraft Java with the MediaControl mod installed (Fabric, NeoForge or Forge).</li>
+      <li><code>playerctl</code> installed on your system.</li>
+      <li>A media player that supports MPRIS. Spotify, VLC, Rhythmbox, Firefox, Chrome and most other players do.</li>
+    </ul>
+
+    <h2 id="install">1. Install <code>playerctl</code></h2>
+    <p>Run the command for your distribution:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Distribution</th><th>Command</th></tr></thead>
+        <tbody>
+          <tr><td>Ubuntu / Debian / Linux Mint</td><td><code>sudo apt install playerctl</code></td></tr>
+          <tr><td>Fedora</td><td><code>sudo dnf install playerctl</code></td></tr>
+          <tr><td>Arch / Manjaro</td><td><code>sudo pacman -S playerctl</code></td></tr>
+          <tr><td>openSUSE</td><td><code>sudo zypper install playerctl</code></td></tr>
+          <tr><td>Void Linux</td><td><code>sudo xbps-install playerctl</code></td></tr>
+          <tr><td>NixOS</td><td>Add <code>playerctl</code> to <code>environment.systemPackages</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="check">2. Check that it works</h2>
+    <p>Start playing something in your media player, then run:</p>
+    <pre><code>playerctl --list-all
+playerctl status</code></pre>
+    <ul>
+      <li>The first command should list your player, for example <code>spotify</code>.</li>
+      <li>The second should print <code>Playing</code> or <code>Paused</code>.</li>
+    </ul>
+    <p class="callout">If the first command prints nothing, your player does not support MPRIS, and MediaControl will not be able to see it either.</p>
+
+    <h2 id="start">3. Start Minecraft</h2>
+    <p>Launch the game with your music playing. The panel appears on the pause menu (<kbd>Esc</kbd>) and in the bottom-left of the main menu.</p>
+
+    <h2 id="flatpak">Using a Flatpak launcher (Prism Launcher, Modrinth App, etc.)</h2>
+    <p>If your Minecraft launcher is installed as a Flatpak, it runs in a sandbox and cannot see <code>playerctl</code> on its own. Do both of the following:</p>
+    <ol>
+      <li>Install <code>playerctl</code> on your system (step 1 above).</li>
+      <li>Allow the launcher to run commands on the host, using your launcher's Flatpak app ID:</li>
+    </ol>
+    <pre><code>flatpak override --user --talk-name=org.freedesktop.Flatpak org.prismlauncher.PrismLauncher</code></pre>
+    <p>Common app IDs:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Launcher</th><th>App ID</th></tr></thead>
+        <tbody>
+          <tr><td>Prism Launcher</td><td><code>org.prismlauncher.PrismLauncher</code></td></tr>
+          <tr><td>Modrinth App</td><td><code>com.modrinth.ModrinthApp</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Not sure of your launcher's ID? Run <code>flatpak list</code> and look it up. Restart the launcher after running the command.</p>
+    <p>MediaControl detects Flatpak automatically and runs <code>playerctl</code> on the host for you.</p>
+
+    <h2 id="troubleshooting">Troubleshooting</h2>
+
+    <h3>The panel says "No media playing"</h3>
+    <p>Run <code>playerctl --list-all</code> in a terminal while your music is playing.</p>
+    <ul>
+      <li><strong>Empty output:</strong> the player does not support MPRIS, or it is not running in the same desktop session as the game.</li>
+      <li><strong><code>playerctl: command not found</code>:</strong> install it (step 1).</li>
+      <li><strong>Works in the terminal but not in the game, and you use a Flatpak launcher:</strong> apply the Flatpak step above.</li>
+    </ul>
+
+    <h3>The album cover does not show</h3>
+    <p>Make sure you are on the latest MediaControl release. Covers from players such as Spotify arrive as JPEG images, and older builds could not read them.</p>
+
+    <h3>I use a remote or headless machine</h3>
+    <p>The media player and Minecraft must run inside the same user desktop session. Playing through RDP into a desktop session works.</p>
+
+    <h3>Still stuck?</h3>
+    <p>Open <code>logs/latest.log</code> in your Minecraft instance folder and look for lines containing <code>[MediaControl]</code>. Include them when you report the problem.</p>
+
+    <h2 id="good-to-know">Good to know</h2>
+    <ul>
+      <li>MediaControl starts one small helper process to talk to your media player. It reads only what is currently playing and sends play, pause, skip, back and seek commands. Nothing is sent over the network except downloading the current album cover image from the address your player gives.</li>
+      <li>Supported systems are Windows and Linux. macOS shows "Incompatible Operating System".</li>
+    </ul>
+  </main>
+
+  <footer class="footer">
+    <img src="/assets/favicon.png" alt="" width="28" height="28">
+    <p>© <span id="year">2026</span> 11fanatic11 · Made in Australia</p>
+    <p><a class="footer-email" href="mailto:contact@fanaticdev.xyz">contact@fanaticdev.xyz</a></p>
+    <p class="muted">Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft.</p>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="/docs.js"></script>
+</body>
+</html>

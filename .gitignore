@@ -2,3 +2,6 @@
 .claude/
 email-server/
 .DS_Store
+
+# Source notes for site pages (published as HTML instead)
+mediacontrol.md
