@@ -5,3 +5,6 @@ email-server/
 
 # Source notes for site pages (published as HTML instead)
 mediacontrol.md
+
+# Source folder for a site extra (the asset lives in assets/)
+geraldeverywhere/
