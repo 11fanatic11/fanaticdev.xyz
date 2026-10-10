@@ -119,7 +119,7 @@ main, .footer { max-width: 1120px; margin: 0 auto; padding: 0 16px; }
 .btn-ghost:hover { border-color: var(--purple); color: #fff; }
 
 /* Servers */
-.servers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.servers { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
 .server {
   display: flex; flex-direction: column; gap: 16px;
   background: linear-gradient(180deg, var(--surface-2), var(--surface));
