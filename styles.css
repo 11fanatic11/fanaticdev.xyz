@@ -167,6 +167,9 @@ main, .footer { max-width: 1120px; margin: 0 auto; padding: 0 16px; }
 }
 .server-meta b { color: var(--text); }
 .server-meta a { margin-left: auto; }
+.server-meta a.meta-link { margin-left: 0; }
+.server-note { margin: 0; padding: 10px 14px; font-size: 14px; background: rgba(139, 92, 246, .1); border: 1px solid var(--purple-deep); border-radius: 10px; }
+.server-note b { color: var(--text); }
 
 /* Mods */
 .mods { display: grid; gap: 14px; }
