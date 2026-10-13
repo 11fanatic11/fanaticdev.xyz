@@ -8,3 +8,7 @@ mediacontrol.md
 
 # Source folder for a site extra (the asset lives in assets/)
 geraldeverywhere/
+
+# Not part of this site (own repo / local notes)
+mods-site/
+README.md
