@@ -117,6 +117,8 @@ main, .footer { max-width: 1120px; margin: 0 auto; padding: 0 16px; }
 .btn-primary:hover { background: #7c4dee; color: #fff; }
 .btn-ghost { border-color: var(--border); color: var(--text); background: var(--surface); }
 .btn-ghost:hover { border-color: var(--purple); color: #fff; }
+.btn-discord { background: #5865f2; color: #fff; box-shadow: 0 8px 24px -8px rgba(88, 101, 242, .7); }
+.btn-discord:hover { background: #4752c4; color: #fff; }
 
 /* Servers */
 .servers { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
