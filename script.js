@@ -52,6 +52,8 @@ async function loadServerStatus() {
       status.textContent = "Online";
       status.className = "status online";
       card.querySelector("[data-players]").textContent = `${data.players.online}/${data.players.max}`;
+      const ver = card.querySelector("[data-version]");
+      if (ver && data.version) ver.textContent = data.version.replace(/^Paper\s*/i, "");
       if (data.icon) card.querySelector(".server-icon").src = data.icon;
       return data.players.online;
     } catch {
